@@ -10,8 +10,13 @@ import {
 } from "../colors";
 import IconCross from "../assets/images/icon-cross.svg";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteArray, toggleTodo, clearCompletedArray } from "../store";
-import { useState } from "react";
+import {
+  deleteArray,
+  toggleTodo,
+  clearCompletedArray,
+  sortArray,
+} from "../store";
+import { useRef, useState } from "react";
 import CheckBox from "./CheckBox";
 
 const CreatedTodoContainer = styled.div`
@@ -188,12 +193,40 @@ const CreatedTodo = ({ darkMode }) => {
     return item.status === true;
   }).length;
   // no of items left //
+
+  // ref for dragItem and dragOverItem //
+  const dragItem = useRef(null);
+  const dragOverItem = useRef(null);
+  // ref for dragItem and dragOverItem //
+
+  const handleSort = () => {
+    const newArray = [...arrayData];
+    const [reorderedItem] = newArray.splice(dragItem.current, 1);
+    newArray.splice(dragOverItem.current, 0, reorderedItem);
+    dragItem.current = null;
+    dragOverItem.current = null;
+    dispatch(sortArray(newArray));
+  };
+  // handle drag events //
+  // touch //
+
+  // touch //
   return (
     <div>
       <CreatedTodoContainer darkMode={darkMode}>
-        {arrayData.map((item) => {
+        {arrayData.map((item, index) => {
           return (
-            <div key={item.id}>
+            <div
+              key={item.id}
+              draggable
+              onTouchStart={(e) => (dragItem.current = index)}
+              onTouchMove={(e) => (dragOverItem.current = index)}
+              onTouchEnd={handleSort}
+              onDragStart={(e) => (dragItem.current = index)}
+              onDragEnter={(e) => (dragOverItem.current = index)}
+              onDragEnd={handleSort}
+              onDragOver={(e) => e.preventDefault()}
+            >
               {allActiveCompletedState === "All" && (
                 <CreatedTodoData key={item.id} darkMode={darkMode}>
                   <div

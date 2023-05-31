@@ -28,8 +28,12 @@ toggleTodo (state, action)  {
 clearCompletedArray(state,action){
   // use filter to return a new array with only the items that are not completed
   return state.filter((item) => item.status);
+},
+
+sortArray(state,action){
+  return action.payload;
 }
     },
 });
-export const {addArray,deleteArray,toggleTodo,clearCompletedArray} = arraySlice.actions;
+export const {addArray,deleteArray,toggleTodo,clearCompletedArray,sortArray} = arraySlice.actions;
 export const arrayReducer = arraySlice.reducer;
