@@ -209,18 +209,18 @@ const CreatedTodo = ({ darkMode }) => {
   };
   // handle drag events //
   // touch //
-  const handleTouchStart = (e, index) => {
-    dragItem.current = index;
-  };
+  // const handleTouchStart = (e, index) => {
+  //   dragItem.current = index;
+  // };
 
-  const handleTouchMove = (e, index) => {
-    e.preventDefault();
-    dragOverItem.current = index;
-  };
+  // const handleTouchMove = (e, index) => {
+  //   e.preventDefault();
+  //   dragOverItem.current = index;
+  // };
 
-  const handleTouchEnd = (e) => {
-    handleSort();
-  };
+  // const handleTouchEnd = (e) => {
+  //   handleSort();
+  // };
   // touch //
   return (
     <div>
@@ -230,20 +230,17 @@ const CreatedTodo = ({ darkMode }) => {
             <div
               key={item.id}
               draggable
-              onTouchStart={(e) => handleTouchStart(e, index)}
-              onTouchMove={(e) => handleTouchMove(e, index)}
-              onTouchEnd={handleTouchEnd}
-              onTouchCancel={() => {
-                dragItem.current = null;
-                dragOverItem.current = null;
-              }}
+              // onTouchStart={(e) => handleTouchStart(e, index)}
+              // onTouchMove={(e) => handleTouchMove(e, index)}
+              // onTouchEnd={handleTouchEnd}
+              // onTouchCancel={() => {
+              //   dragItem.current = null;
+              //   dragOverItem.current = null;
+              // }}
               onDragStart={(e) => (dragItem.current = index)}
               onDragEnter={(e) => (dragOverItem.current = index)}
               onDragEnd={handleSort}
               onDragOver={(e) => e.preventDefault()}
-              style={{
-                touchAction: "none", // Disable default touch interactions
-              }}
             >
               {allActiveCompletedState === "All" && (
                 <CreatedTodoData key={item.id} darkMode={darkMode}>
